@@ -1,0 +1,1 @@
+{"version":3,"file":"getClickedRange.d.ts","sourceRoot":"","sources":["../../src/utils/getClickedRange.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,eAAe,EAAE,qBAAqB,EAAE,MAAM,YAAY,CAAA;AAIxE,QAAA,MAAM,eAAe,GACnB,WAAW,MAAM,EACjB,sBAAsB,CAAC,qBAAqB,GAAG,eAAe,CAAC,EAAE,EACjE,mBAAmB,OAAO,EAC1B,cAAc,MAAM,GAAG,IAAI,KAC1B,MAAM,EAkBR,CAAA;AAED,eAAe,eAAe,CAAA"}

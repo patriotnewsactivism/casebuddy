@@ -1,0 +1,39 @@
+import type Uppy from '@uppy/core';
+import type { Body, Meta, State, UppyFile } from '@uppy/core';
+import type { I18n } from '@uppy/utils';
+import { Component, type ComponentChild } from 'preact';
+import type { DashboardState } from '../../Dashboard.js';
+type Props<M extends Meta, B extends Body> = {
+    file: UppyFile<M, B>;
+    handleRequestThumbnail: (file: UppyFile<M, B>) => void;
+    handleCancelThumbnail: (file: UppyFile<M, B>) => void;
+    individualCancellation: boolean;
+    showRemoveButtonAfterComplete: boolean;
+    recoveredState: State<M, B>['recoveredState'];
+    resumableUploads: boolean;
+    i18n: I18n;
+    role: string;
+    showLinkToFileUploadResult: boolean;
+    toggleFileCard: (show: boolean, fileId: string) => void;
+    metaFields: DashboardState<M, B>['metaFields'];
+    id: string;
+    containerWidth: number;
+    containerHeight: number;
+    toggleAddFilesPanel: (show: boolean) => void;
+    isSingleFile: boolean;
+    hideRetryButton: boolean;
+    hideCancelButton: boolean;
+    hidePauseResumeButton: boolean;
+    canEditFile: (file: UppyFile<M, B>) => boolean;
+    openFileEditor: (file: UppyFile<M, B>) => void;
+    uppy: Uppy<M, B>;
+};
+export default class FileItem<M extends Meta, B extends Body> extends Component<Props<M, B>> {
+    componentDidMount(): void;
+    shouldComponentUpdate(nextProps: Props<M, B>): boolean;
+    componentDidUpdate(): void;
+    componentWillUnmount(): void;
+    render(): ComponentChild;
+}
+export {};
+//# sourceMappingURL=index.d.ts.map

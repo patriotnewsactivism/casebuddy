@@ -1,0 +1,200 @@
+@use "sass:color";
+@use '@uppy/core/src/_utils.scss';
+@use '@uppy/core/src/_variables.scss';
+
+.uppy-ScreenCapture-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.uppy-ScreenCapture-mediaContainer {
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  background-color: variables.$gray-800;
+
+  .uppy-size--md & {
+    max-width: 100%;
+  }
+}
+
+.uppy-ScreenCapture-media {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  outline: 0;
+}
+
+.uppy-ScreenCapture-buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 75px;
+  padding: 0 20px;
+  background-color: variables.$white;
+  border-top: 1px solid variables.$gray-200;
+
+  [data-uppy-theme='dark'] & {
+    background-color: variables.$gray-900;
+    border-top: 1px solid variables.$gray-800;
+  }
+}
+
+.uppy-ScreenCapture-button {
+  @include utils.blue-border-focus;
+
+  width: 45px;
+  height: 45px;
+  color: variables.$white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  [data-uppy-theme='dark'] & {
+    @include utils.blue-border-focus--dark;
+  }
+
+  .uppy-size--md & {
+    width: 60px;
+    height: 60px;
+  }
+
+  &:hover {
+    background-color: color.adjust(variables.$red, $lightness: -5%);
+  }
+}
+
+.uppy-ScreenCapture-button svg {
+  display: inline-block;
+  width: 30px;
+  max-width: 100%;
+  height: 30px;
+  max-height: 100%;
+  overflow: hidden;
+  vertical-align: text-top;
+  fill: currentColor;
+}
+
+.uppy-ScreenCapture-button--submit {
+  background-color: variables.$blue;
+
+  &:hover {
+    background-color: color.adjust(variables.$blue, $lightness: -5%);
+  }
+
+  &:disabled {
+    background-color: variables.$gray-500;
+    cursor: default;
+  }
+
+  &:disabled:hover {
+    background-color: variables.$gray-200;
+  }
+}
+
+.uppy-ScreenCapture-button--discard {
+  margin-left: 8px;
+  background-color: variables.$red;
+
+  svg {
+    fill: variables.$white;
+  }
+
+  &:hover {
+    background-color: color.adjust(variables.$red, $lightness: -10%);
+  }
+}
+
+.uppy-ScreenCapture-title {
+  max-width: 500px;
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 0 15px;
+  color: variables.$gray-800;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.uppy-ScreenCapture-icon--stream {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  margin: 1rem;
+
+  svg {
+    fill: variables.$gray-500;
+  }
+}
+
+.uppy-ScreenCapture-icon--streamActive svg {
+  animation: uppy-ScreenCapture-icon--blink 1s cubic-bezier(0.47, 0, 0.75, 0.72)
+    infinite;
+}
+
+@keyframes uppy-ScreenCapture-icon--blink {
+  0% {
+    fill: variables.$blue;
+  }
+  50% {
+    fill: variables.$gray-500;
+  }
+  100% {
+    fill: variables.$blue;
+  }
+}
+
+.uppy-ScreenCapture-button--video {
+  color: variables.$white;
+  background: variables.$red;
+
+  &:hover {
+    background-color: color.adjust(variables.$red, $lightness: -10%);
+  }
+}
+
+.uppy-ScreenCapture-button--screenshot {
+  margin-right: 8px;
+  background-color: variables.$gray-500;
+  color: variables.$white;
+  outline: none;
+
+  [data-uppy-theme='dark'] & {
+    background-color: variables.$gray-700;
+  }
+
+  svg {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    vertical-align: text-top;
+    fill: currentColor;
+  }
+
+  &:hover {
+    background-color: color.adjust(variables.$gray-500, $lightness: -10%);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}

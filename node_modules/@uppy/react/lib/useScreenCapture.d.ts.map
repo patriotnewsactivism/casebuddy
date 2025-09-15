@@ -1,0 +1,1 @@
+{"version":3,"file":"useScreenCapture.d.ts","sourceRoot":"","sources":["../src/useScreenCapture.ts"],"names":[],"mappings":"AAAA,OAAO,EAEL,KAAK,qBAAqB,EAC3B,MAAM,kBAAkB,CAAA;AAKzB,KAAK,kBAAkB,GAAG;IACxB,QAAQ,EAAE,MAAM,IAAI,CAAA;CACrB,CAAA;AAED,wBAAgB,gBAAgB,CAAC,EAC/B,QAAQ,GACT,EAAE,kBAAkB,GAAG,qBAAqB,CAY5C"}
