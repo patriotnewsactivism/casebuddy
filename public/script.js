@@ -20,56 +20,13 @@
 
   // Load cases from localStorage or initialise empty array
   let cases = [];
-  
-  // Function to fetch cases from API
-  async function fetchCasesFromAPI() {
-    try {
-      // Check if we're on Netlify (using the .netlify domain or custom domain)
-      let apiUrl = '/api/cases';
-      if (window.location.hostname.includes('netlify.app') || 
-          (!window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1'))) {
-        apiUrl = '/.netlify/functions/api/cases';
-      }
-      
-      const response = await fetch(apiUrl);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching cases from API:', error);
-      return null;
-    }
-  }
-  
-  // Try to load cases from localStorage first
   try {
     const stored = localStorage.getItem('cases');
     cases = stored ? JSON.parse(stored) : [];
     if (!Array.isArray(cases)) cases = [];
-    
-    // If no cases in localStorage, try to fetch from API
-    if (cases.length === 0) {
-      fetchCasesFromAPI().then(apiCases => {
-        if (apiCases && Array.isArray(apiCases) && apiCases.length > 0) {
-          cases = apiCases;
-          displayCases(cases);
-          // Save to localStorage for future use
-          localStorage.setItem('cases', JSON.stringify(cases));
-        }
-      });
-    }
   } catch (err) {
     console.warn('Error reading cases from storage', err);
     cases = [];
-    
-    // Try to fetch from API as fallback
-    fetchCasesFromAPI().then(apiCases => {
-      if (apiCases && Array.isArray(apiCases) && apiCases.length > 0) {
-        cases = apiCases;
-        displayCases(cases);
-      }
-    });
   }
 
   // DOM element references
