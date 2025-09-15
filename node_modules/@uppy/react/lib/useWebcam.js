@@ -1,0 +1,9 @@
+import { createWebcamController } from '@uppy/components';
+import { useMemo, useSyncExternalStore } from 'react';
+import { useUppyContext } from './headless/UppyContextProvider.js';
+export function useWebcam({ onSubmit }) {
+    const { uppy } = useUppyContext();
+    const controller = useMemo(() => createWebcamController(uppy, onSubmit), [uppy, onSubmit]);
+    const store = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot);
+    return store;
+}

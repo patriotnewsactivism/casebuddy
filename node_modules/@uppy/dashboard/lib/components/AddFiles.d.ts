@@ -1,0 +1,45 @@
+import type { I18n, Translator } from '@uppy/utils';
+import { Component, type ComponentChild, type h } from 'preact';
+import type { DashboardState, TargetWithRender } from '../Dashboard.js';
+interface AddFilesProps {
+    i18n: I18n;
+    i18nArray: Translator['translateArray'];
+    acquirers: TargetWithRender[];
+    handleInputChange: (event: h.JSX.TargetedEvent<HTMLInputElement, Event>) => void;
+    maxNumberOfFiles: number | null;
+    allowedFileTypes: string[] | null;
+    showNativePhotoCameraButton: boolean;
+    showNativeVideoCameraButton: boolean;
+    nativeCameraFacingMode: 'user' | 'environment' | '';
+    showPanel: (id: string) => void;
+    activePickerPanel: DashboardState<any, any>['activePickerPanel'];
+    disableLocalFiles: boolean;
+    fileManagerSelectionType: string;
+    note: string | null;
+    proudlyDisplayPoweredByUppy: boolean;
+}
+declare class AddFiles extends Component<AddFilesProps> {
+    fileInput: HTMLInputElement | null;
+    folderInput: HTMLInputElement | null;
+    mobilePhotoFileInput: HTMLInputElement | null;
+    mobileVideoFileInput: HTMLInputElement | null;
+    private triggerFileInputClick;
+    private triggerFolderInputClick;
+    private triggerVideoCameraInputClick;
+    private triggerPhotoCameraInputClick;
+    private onFileInputChange;
+    private renderHiddenInput;
+    private renderHiddenCameraInput;
+    private renderMyDeviceAcquirer;
+    private renderPhotoCamera;
+    private renderVideoCamera;
+    private renderBrowseButton;
+    private renderDropPasteBrowseTagline;
+    private renderAcquirer;
+    private renderAcquirers;
+    private renderSourcesList;
+    private renderPoweredByUppy;
+    render(): ComponentChild;
+}
+export default AddFiles;
+//# sourceMappingURL=AddFiles.d.ts.map
