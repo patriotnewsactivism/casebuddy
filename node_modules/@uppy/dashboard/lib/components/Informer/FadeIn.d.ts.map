@@ -1,0 +1,1 @@
+{"version":3,"file":"FadeIn.d.ts","sourceRoot":"","sources":["../../../src/components/Informer/FadeIn.tsx"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAE,KAAK,cAAc,EAAa,MAAM,QAAQ,CAAA;AAIlE,MAAM,CAAC,OAAO,OAAO,MAAO,SAAQ,SAAS;IAC3C,GAAG,kCAAc;IAEjB,kBAAkB,CAAC,QAAQ,EAAE,MAAM,IAAI,GAAG,IAAI;IAM9C,kBAAkB,CAAC,QAAQ,EAAE,MAAM,IAAI,GAAG,IAAI;IAM9C,MAAM,IAAI,cAAc;CASzB"}

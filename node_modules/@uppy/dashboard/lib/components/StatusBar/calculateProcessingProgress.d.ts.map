@@ -1,0 +1,1 @@
+{"version":3,"file":"calculateProcessingProgress.d.ts","sourceRoot":"","sources":["../../../src/components/StatusBar/calculateProcessingProgress.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,kBAAkB,EAAE,QAAQ,EAAE,MAAM,aAAa,CAAA;AAE/D,MAAM,CAAC,OAAO,UAAU,2BAA2B,CACjD,KAAK,EAAE,MAAM,CAAC,MAAM,EAAE,QAAQ,CAAC,GAAG,EAAE,GAAG,CAAC,CAAC,GACxC,kBAAkB,CAyBpB"}

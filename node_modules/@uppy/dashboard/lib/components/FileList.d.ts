@@ -1,0 +1,31 @@
+import type { Body, Meta, State, Uppy, UppyFile } from '@uppy/core';
+import type { I18n } from '@uppy/utils';
+import type { DashboardState } from '../Dashboard.js';
+type FileListProps<M extends Meta, B extends Body> = {
+    id: string;
+    i18n: I18n;
+    uppy: Uppy<M, B>;
+    files: State<M, B>['files'];
+    resumableUploads: boolean;
+    hideRetryButton: boolean;
+    hidePauseResumeButton: boolean;
+    hideCancelButton: boolean;
+    showLinkToFileUploadResult: boolean;
+    showRemoveButtonAfterComplete: boolean;
+    metaFields: DashboardState<M, B>['metaFields'];
+    isSingleFile: boolean;
+    toggleFileCard: (show: boolean, fileId: string) => void;
+    handleRequestThumbnail: (file: UppyFile<M, B>) => void;
+    handleCancelThumbnail: (file: UppyFile<M, B>) => void;
+    recoveredState: State<M, B>['recoveredState'];
+    individualCancellation: boolean;
+    itemsPerRow: number;
+    openFileEditor: (file: UppyFile<M, B>) => void;
+    canEditFile: (file: UppyFile<M, B>) => boolean;
+    toggleAddFilesPanel: (show: boolean) => void;
+    containerWidth: number;
+    containerHeight: number;
+};
+export default function FileList<M extends Meta, B extends Body>({ id, i18n, uppy, files, resumableUploads, hideRetryButton, hidePauseResumeButton, hideCancelButton, showLinkToFileUploadResult, showRemoveButtonAfterComplete, metaFields, isSingleFile, toggleFileCard, handleRequestThumbnail, handleCancelThumbnail, recoveredState, individualCancellation, itemsPerRow, openFileEditor, canEditFile, toggleAddFilesPanel, containerWidth, containerHeight, }: FileListProps<M, B>): import("preact").JSX.Element;
+export {};
+//# sourceMappingURL=FileList.d.ts.map
