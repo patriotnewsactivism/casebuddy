@@ -460,53 +460,6 @@
   </div>
 
   <!-- Scripts -->
-  <script src="script.js"></script>
-  <script src="ai-features.js"></script>
-  
-  <script>
-    // Hide loading screen after page loads
-    window.addEventListener('load', function() {
-      setTimeout(() => {
-        document.getElementById('loading-screen').style.display = 'none';
-      }, 1500);
-    });
-    
-    // Tab switching functionality
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const tabName = this.dataset.tab;
-        
-        // Remove active class from all tabs and content
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        
-        // Add active class to clicked tab and corresponding content
-        this.classList.add('active');
-        document.getElementById(tabName + '-tab').classList.add('active');
-      });
-    });
-    
-    // Case switching functionality
-    document.querySelectorAll('.case-item').forEach(item => {
-      item.addEventListener('click', function() {
-        // Remove active class from all case items
-        document.querySelectorAll('.case-item').forEach(i => i.classList.remove('active'));
-        
-        // Add active class to clicked item
-        this.classList.add('active');
-      });
-    });
-    
-    // Theme toggle functionality
-    document.getElementById('theme-toggle').addEventListener('click', function() {
-      document.body.classList.toggle('dark-mode');
-      const icon = this.querySelector('i');
-      if (document.body.classList.contains('dark-mode')) {
-        icon.className = 'fas fa-sun';
-      } else {
-        icon.className = 'fas fa-moon';
-      }
-    });
-  </script>
+  <script src="modern-ui.js"></script>
 </body>
 </html>
