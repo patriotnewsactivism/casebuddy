@@ -9,6 +9,14 @@ export class FoiaOptimizationService {
     });
   }
   
+  // Static method for route usage
+  static async optimizeFOIARequest(requestData: any): Promise<OptimizedFoiaRequest> {
+    const service = new FoiaOptimizationService();
+    const subject = typeof requestData === 'object' ? requestData.subject || '' : String(requestData);
+    const description = typeof requestData === 'object' ? requestData.description || '' : '';
+    return service.optimizeRequest(subject, description);
+  }
+  
   async optimizeRequest(subject: string, description: string): Promise<OptimizedFoiaRequest> {
     const response = await this.anthropic.messages.create({
       model: "claude-3-sonnet-20240229",

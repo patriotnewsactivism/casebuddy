@@ -1,3 +1,4 @@
+import type { Express } from "express";
 import { Router } from "express";
 import { authenticateUser } from "../auth";
 // import { SimilarityService } from "../services/similarity-service";
@@ -70,5 +71,9 @@ router.post("/cases/search-similar", authenticateUser, async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+export function setupSimilarityRoutes(app: Express) {
+  app.use('/api', router);
+}
 
 export default router;

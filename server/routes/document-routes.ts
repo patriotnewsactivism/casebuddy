@@ -67,4 +67,8 @@ router.get("/documents/:id/analysis", authenticateUser, async (req, res) => {
   }
 });
 
+export function setupDocumentRoutes(app: any) {
+  app.use("/api", router);
+}
+
 export default router;

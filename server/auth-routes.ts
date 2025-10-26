@@ -1,6 +1,7 @@
+import type { Express } from "express";
 import { Router } from "express";
 import { AuthService, type AuthRequest } from "./auth";
-import { insertUserSchema, loginSchema } from "@shared/schema";
+import { insertUserSchema, loginSchema } from "./schema";
 import { z } from "zod";
 
 const router = Router();
@@ -63,8 +64,8 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const { usernameOrEmail, password } = validation.data;
-    const result = await AuthService.login(usernameOrEmail, password);
+    const { username, password } = validation.data;
+    const result = await AuthService.login(username, password);
 
     if ("error" in result) {
       return res.status(401).json({ error: result.error });
@@ -143,12 +144,16 @@ router.get("/status", async (req: AuthRequest, res) => {
     
     res.json({ 
       authenticated: !!user,
-      user: user ? { id: user.id, username: user.username, email: user.email, role: user.role } : null
+      user: user ? { id: user.id, username: user.username, email: user.email } : null
     });
   } catch (error) {
     console.error("Auth status error:", error);
     res.json({ authenticated: false });
   }
 });
+
+export function setupAuthRoutes(app: Express) {
+  app.use("/api/auth", router);
+}
 
 export default router;

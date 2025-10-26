@@ -18,7 +18,7 @@ router.post('/research/conduct', async (req, res) => {
     }
     
     // Conduct legal research
-    const research = await LegalResearchService.conductLegalResearch(researchQuery, caseData);
+    const research = await LegalResearchService.conductLegalResearch(researchQuery);
     
     res.json({ research });
   } catch (error) {
@@ -43,7 +43,7 @@ router.get('/cases/:id/research', async (req, res) => {
     };
     
     // Conduct legal research
-    const research = await LegalResearchService.conductLegalResearch("contract disputes", mockCaseData);
+    const research = await LegalResearchService.conductLegalResearch("contract disputes");
     
     res.json({ research });
   } catch (error) {

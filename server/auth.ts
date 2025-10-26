@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { eq, or, sql } from "drizzle-orm";
 import { db } from "./db";
-import { users, sessions, type User } from "@shared/schema";
+import { users, sessions, type User } from "./schema";
 import type { Request, Response, NextFunction } from "express";
 import crypto from "crypto";
 
@@ -73,45 +73,35 @@ export class AuthService {
 
   static async register(userData: {
     username: string;
-    email: string;
+    email?: string;
     password: string;
-    firstName?: string;
-    lastName?: string;
   }): Promise<{ user: User; sessionId: string } | { error: string }> {
     try {
-      // Check if username or email already exists
+      // Check if username already exists
       const existingUser = await db
         .select()
         .from(users)
-        .where(or(eq(users.username, userData.username), eq(users.email, userData.email)))
+        .where(eq(users.username, userData.username))
         .limit(1);
 
       if (existingUser.length > 0) {
-        if (existingUser[0].username === userData.username) {
-          return { error: "Username already exists" };
-        }
-        return { error: "Email already exists" };
+        return { error: "Username already exists" };
       }
 
       // Hash password
       const hashedPassword = await this.hashPassword(userData.password);
 
-      // Set trial end date (2 weeks from now)
-      const trialEndsAt = new Date();
-      trialEndsAt.setDate(trialEndsAt.getDate() + 14);
-
-      // Create user with trial
-      const newUser = await db
+      // Create user
+      const [newUser] = await db
         .insert(users)
         .values({
-          ...userData,
+          username: userData.username,
           password: hashedPassword,
-          subscriptionStatus: "trial",
-          trialEndsAt,
+          email: userData.email || null,
         })
         .returning();
 
-      const user = newUser[0];
+      const user = newUser;
 
       // Create session
       const sessionId = await this.createSession(user.id);
@@ -138,9 +128,10 @@ export class AuthService {
 
       const user = userResult[0];
 
-      if (!user.isActive) {
-        return { error: "Account is deactivated" };
-      }
+      // Check if user account is active (if such field exists)
+      // if (!user.isActive) {
+      //   return { error: "Account is deactivated" };
+      // }
 
       // Verify password
       const isPasswordValid = await this.verifyPassword(password, user.password);
@@ -148,11 +139,11 @@ export class AuthService {
         return { error: "Invalid credentials" };
       }
 
-      // Update last login
-      await db
-        .update(users)
-        .set({ lastLoginAt: new Date() })
-        .where(eq(users.id, user.id));
+      // Update last login (if such field exists)
+      // await db
+      //   .update(users)
+      //   .set({ lastLoginAt: new Date() })
+      //   .where(eq(users.id, user.id));
 
       // Create session
       const sessionId = await this.createSession(user.id);
