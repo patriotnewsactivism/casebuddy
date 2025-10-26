@@ -4,462 +4,91 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CaseBuddy – Case Intelligence Portal</title>
-  <!-- Enhanced CSS Styles -->
-  <link rel="stylesheet" href="src/styles/main.css">
-  <link rel="stylesheet" href="modal.css">
-  <!-- Font Awesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+  <script type="module" crossorigin src="/assets/main-BPU7AIeO.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-Cm_5Tb-c.css">
 </head>
-<body class="modern-ui">
-  <!-- Loading Screen -->
-  <div id="loading-screen" class="loading-screen">
-    <div class="loading-content">
-      <div class="loading-logo">⚖️</div>
-      <h2>CaseBuddy</h2>
-      <p>Loading your case intelligence portal...</p>
-      <div class="loading-bar">
-        <div class="loading-progress"></div>
+<body>
+  <header>
+    <h1>CaseBuddy – Case Intelligence Portal</h1>
+    <p class="subtitle">Organise, analyse and manage your legal cases with ease.</p>
+  </header>
+  <div class="container">
+    <aside id="cases-section">
+      <h2>Cases</h2>
+      <ul id="cases-list" class="list"></ul>
+      <h3>Add New Case</h3>
+      <form id="new-case-form" class="form">
+        <input type="text" id="case-title" placeholder="Case title" required />
+        <textarea id="case-description" placeholder="Case description"></textarea>
+        <button type="submit">Add Case</button>
+      </form>
+      <h3>Search</h3>
+      <input type="text" id="search-input" placeholder="Search cases, documents, evidence…" />
+      <ul id="search-results" class="list search"></ul>
+    </aside>
+    <main id="case-details">
+      <h2>Case Details</h2>
+      <div id="no-selection">Select a case to view its details.</div>
+      <div id="case-info" class="hidden">
+        <h3 id="case-title-display"></h3>
+        <p id="case-description-display"></p>
+        
+        <section>
+          <h4>Documents</h4>
+          <ul id="documents-list" class="list"></ul>
+          <form id="add-document-form" class="form inline">
+            <input type="text" id="document-name" placeholder="Document name" required />
+            <input type="file" id="document-file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" />
+            <button type="submit">Add Document</button>
+          </form>
+        </section>
+        
+        <section>
+          <h4>Similar Cases</h4>
+          <button id="find-similar-cases-btn">Find Similar Cases</button>
+          <ul id="similar-cases-list" class="list"></ul>
+        </section>
+        
+        <section>
+          <h4>Evidence</h4>
+          <ul id="evidence-list" class="list"></ul>
+          <form id="add-evidence-form" class="form inline">
+            <input type="text" id="evidence-name" placeholder="Evidence name" required />
+            <input type="file" id="evidence-file" accept="image/*,video/*" />
+            <button type="submit">Add Evidence</button>
+          </form>
+        </section>
+        
+        <section>
+          <h4>Timeline</h4>
+          <ul id="timeline-list" class="list"></ul>
+          <form id="add-timeline-form" class="form inline">
+            <!-- Use a date input but do not mark as required to avoid
+                 validation issues on browsers that may not accept manual
+                 typing of yyyy-mm-dd values. Users can still supply a date
+                 and it will be used as-is. -->
+            <input type="date" id="timeline-date" />
+            <input type="text" id="timeline-title" placeholder="Event title" required />
+            <input type="text" id="timeline-description" placeholder="Event description" />
+            <button type="submit">Add Event</button>
+          </form>
+        </section>
+        
+        <section>
+          <h4>FOIA Requests</h4>
+          <ul id="foia-list" class="list"></ul>
+          <form id="add-foia-form" class="form">
+            <input type="text" id="foia-subject" placeholder="Request subject" required />
+            <textarea id="foia-description" placeholder="Request description"></textarea>
+            <button type="submit">Add FOIA Request</button>
+          </form>
+        </section>
       </div>
-    </div>
+    </main>
   </div>
-
-  <!-- Main Application -->
-  <div class="app-container">
-    <!-- Header -->
-    <header class="app-header">
-      <div class="logo-container">
-        <div class="logo-icon">⚖️</div>
-        <h1>CaseBuddy</h1>
-        <p class="subtitle">Case Intelligence Portal</p>
-      </div>
-      <div class="header-controls">
-        <button class="theme-toggle" id="theme-toggle" title="Toggle Dark Mode">
-          <i class="fas fa-moon"></i>
-        </button>
-        <button class="notification-btn" title="Notifications">
-          <i class="fas fa-bell"></i>
-          <span class="notification-badge">3</span>
-        </button>
-        <div class="user-profile">
-          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Profile" class="profile-img">
-          <span>Legal Team</span>
-        </div>
-      </div>
-    </header>
-
-    <!-- Main Container -->
-    <div class="main-container">
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <!-- Search -->
-        <div class="search-container">
-          <i class="fas fa-search search-icon"></i>
-          <input type="text" id="search-input" placeholder="Search cases, documents...">
-        </div>
-
-        <!-- Navigation -->
-        <nav class="sidebar-nav">
-          <div class="nav-item active" data-tab="dashboard">
-            <i class="fas fa-tachometer-alt"></i>
-            <span>Dashboard</span>
-            <span class="nav-count">12</span>
-          </div>
-          <div class="nav-item" data-tab="cases">
-            <i class="fas fa-folder-open"></i>
-            <span>All Cases</span>
-            <span class="nav-count">8</span>
-          </div>
-          <div class="nav-item" data-tab="documents">
-            <i class="fas fa-file-alt"></i>
-            <span>Documents</span>
-            <span class="nav-count">24</span>
-          </div>
-          <div class="nav-item" data-tab="evidence">
-            <i class="fas fa-camera"></i>
-            <span>Evidence</span>
-            <span class="nav-count">15</span>
-          </div>
-          <div class="nav-item" data-tab="timeline">
-            <i class="fas fa-clock"></i>
-            <span>Timeline</span>
-          </div>
-          <div class="nav-item" data-tab="foia">
-            <i class="fas fa-file-contract"></i>
-            <span>FOIA Requests</span>
-            <span class="nav-count">3</span>
-          </div>
-        </nav>
-
-        <!-- Cases List -->
-        <div class="cases-list-container">
-          <div class="list-header">
-            <h3>Recent Cases</h3>
-            <button class="add-btn" id="add-case-btn" title="Add New Case">
-              <i class="fas fa-plus"></i>
-            </button>
-          </div>
-          <div class="cases-list" id="cases-list">
-            <!-- Sample Cases -->
-            <div class="case-item active" data-case-id="1">
-              <div class="case-icon">
-                <i class="fas fa-gavel"></i>
-              </div>
-              <div class="case-info">
-                <h4>Police Misconduct Case #2024-001</h4>
-                <p>Excessive force incident investigation</p>
-                <div class="case-meta">
-                  <span class="case-date">Jan 15, 2024</span>
-                  <span class="case-badge active">Active</span>
-                </div>
-              </div>
-            </div>
-            <div class="case-item" data-case-id="2">
-              <div class="case-icon">
-                <i class="fas fa-balance-scale"></i>
-              </div>
-              <div class="case-info">
-                <h4>Civil Rights Violation #2024-002</h4>
-                <p>First Amendment rights case</p>
-                <div class="case-meta">
-                  <span class="case-date">Jan 10, 2024</span>
-                  <span class="case-badge pending">Pending</span>
-                </div>
-              </div>
-            </div>
-            <div class="case-item" data-case-id="3">
-              <div class="case-icon">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <div class="case-info">
-                <h4>Government Transparency #2024-003</h4>
-                <p>FOIA request follow-up</p>
-                <div class="case-meta">
-                  <span class="case-date">Dec 28, 2023</span>
-                  <span class="case-badge closed">Closed</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-          <h3>Quick Actions</h3>
-          <button class="quick-action-btn" id="upload-document-btn">
-            <i class="fas fa-upload"></i>
-            <span>Upload Document</span>
-          </button>
-          <button class="quick-action-btn" id="add-evidence-btn">
-            <i class="fas fa-camera"></i>
-            <span>Add Evidence</span>
-          </button>
-          <button class="quick-action-btn" id="create-foia-btn">
-            <i class="fas fa-file-contract"></i>
-            <span>Create FOIA Request</span>
-          </button>
-        </div>
-      </aside>
-
-      <!-- Main Content -->
-      <main class="content">
-        <!-- Content Header -->
-        <div class="content-header">
-          <div class="breadcrumbs">
-            <span>Dashboard</span>
-            <i class="fas fa-chevron-right"></i>
-            <span id="current-section">Case Details</span>
-          </div>
-          <div class="actions">
-            <button class="action-btn" id="export-btn">
-              <i class="fas fa-download"></i>
-              Export
-            </button>
-            <button class="action-btn" id="share-btn">
-              <i class="fas fa-share"></i>
-              Share
-            </button>
-            <button class="action-btn primary" id="new-case-btn">
-              <i class="fas fa-plus"></i>
-              New Case
-            </button>
-          </div>
-        </div>
-
-        <!-- Dynamic Content Area -->
-        <div id="content-area">
-          <!-- Case Details View -->
-          <div class="case-details" id="case-details">
-            <!-- Case Header -->
-            <div class="case-header">
-              <div class="case-header-content">
-                <h2 id="case-title-display">Police Misconduct Case #2024-001</h2>
-                <div class="case-meta">
-                  <div class="meta-item">
-                    <i class="fas fa-calendar"></i>
-                    <span id="case-date">Created: Jan 15, 2024</span>
-                  </div>
-                  <div class="meta-item">
-                    <i class="fas fa-user"></i>
-                    <span id="case-assignee">Assigned to: Legal Team</span>
-                  </div>
-                  <div class="meta-item">
-                    <i class="fas fa-tag"></i>
-                    <span class="case-badge active" id="case-status">Active</span>
-                  </div>
-                </div>
-                <div class="case-stats">
-                  <div class="stat-item">
-                    <div class="stat-value" id="documents-count">5</div>
-                    <div class="stat-label">Documents</div>
-                  </div>
-                  <div class="stat-item">
-                    <div class="stat-value" id="evidence-count">8</div>
-                    <div class="stat-label">Evidence</div>
-                  </div>
-                  <div class="stat-item">
-                    <div class="stat-value" id="timeline-count">12</div>
-                    <div class="stat-label">Events</div>
-                  </div>
-                </div>
-              </div>
-              <div class="case-description" id="case-description-display">
-                This case involves an investigation into alleged excessive force used by police officers during a routine traffic stop. The incident occurred on January 15, 2024, and involves multiple witnesses, body camera footage, and medical records.
-              </div>
-            </div>
-
-            <!-- Tabs -->
-            <div class="tabs">
-              <button class="tab-btn active" data-tab="documents">
-                <i class="fas fa-file-alt"></i>
-                Documents
-                <span class="tab-count">5</span>
-              </button>
-              <button class="tab-btn" data-tab="evidence">
-                <i class="fas fa-camera"></i>
-                Evidence
-                <span class="tab-count">8</span>
-              </button>
-              <button class="tab-btn" data-tab="timeline">
-                <i class="fas fa-clock"></i>
-                Timeline
-                <span class="tab-count">12</span>
-              </button>
-              <button class="tab-btn" data-tab="similar">
-                <i class="fas fa-search"></i>
-                Similar Cases
-              </button>
-              <button class="tab-btn" data-tab="foia">
-                <i class="fas fa-file-contract"></i>
-                FOIA Requests
-                <span class="tab-count">2</span>
-              </button>
-            </div>
-
-            <!-- Tab Content -->
-            <div class="tab-content active" id="documents-tab">
-              <div class="section-header">
-                <h3>Documents</h3>
-                <button class="btn primary" id="upload-doc-btn">
-                  <i class="fas fa-upload"></i>
-                  Upload Document
-                </button>
-              </div>
-              <div class="documents-grid" id="documents-grid">
-                <!-- Sample Documents -->
-                <div class="document-card">
-                  <div class="document-icon">
-                    <i class="fas fa-file-pdf"></i>
-                  </div>
-                  <div class="document-info">
-                    <h4>Police Report #2024-001</h4>
-                    <p>Initial incident report filed by responding officers</p>
-                    <div class="document-meta">
-                      <div class="meta-item">
-                        <i class="fas fa-calendar"></i>
-                        <span>Jan 15, 2024</span>
-                      </div>
-                      <div class="meta-item">
-                        <i class="fas fa-file"></i>
-                        <span>PDF, 2.3 MB</span>
-                      </div>
-                    </div>
-                    <div class="document-actions">
-                      <button class="btn small">
-                        <i class="fas fa-eye"></i>
-                        View
-                      </button>
-                      <button class="btn small primary">
-                        <i class="fas fa-magic"></i>
-                        Analyze
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="document-card">
-                  <div class="document-icon">
-                    <i class="fas fa-file-medical"></i>
-                  </div>
-                  <div class="document-info">
-                    <h4>Medical Records</h4>
-                    <p>Hospital records from victim's treatment</p>
-                    <div class="document-meta">
-                      <div class="meta-item">
-                        <i class="fas fa-calendar"></i>
-                        <span>Jan 15, 2024</span>
-                      </div>
-                      <div class="meta-item">
-                        <i class="fas fa-file"></i>
-                        <span>PDF, 1.8 MB</span>
-                      </div>
-                    </div>
-                    <div class="document-actions">
-                      <button class="btn small">
-                        <i class="fas fa-eye"></i>
-                        View
-                      </button>
-                      <button class="btn small primary">
-                        <i class="fas fa-magic"></i>
-                        Analyze
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-content" id="evidence-tab">
-              <div class="section-header">
-                <h3>Evidence</h3>
-                <button class="btn primary" id="add-evidence-tab-btn">
-                  <i class="fas fa-camera"></i>
-                  Add Evidence
-                </button>
-              </div>
-              <div class="evidence-grid" id="evidence-grid">
-                <!-- Sample Evidence -->
-                <div class="evidence-card">
-                  <div class="evidence-preview">
-                    <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=400&h=200&fit=crop" alt="Body Camera Footage">
-                    <div class="evidence-overlay">
-                      <button class="btn primary">
-                        <i class="fas fa-play"></i>
-                        Play Video
-                      </button>
-                    </div>
-                  </div>
-                  <div class="evidence-info">
-                    <h4>Body Camera Footage</h4>
-                    <p>Officer's body camera recording of the incident</p>
-                    <div class="evidence-meta">
-                      <span class="tag">Video</span>
-                      <span class="tag">Critical</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-content" id="timeline-tab">
-              <div class="section-header">
-                <h3>Timeline</h3>
-                <button class="btn primary" id="predict-timeline-btn">
-                  <i class="fas fa-magic"></i>
-                  AI Timeline Prediction
-                </button>
-              </div>
-              <div class="timeline" id="timeline">
-                <!-- Sample Timeline -->
-                <div class="timeline-item">
-                  <div class="timeline-marker">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-line"></div>
-                  </div>
-                  <div class="timeline-content">
-                    <div class="timeline-date">January 15, 2024 - 2:30 PM</div>
-                    <h4>Traffic Stop Initiated</h4>
-                    <p>Officers initiated a routine traffic stop for alleged speeding violation.</p>
-                  </div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-marker">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-line"></div>
-                  </div>
-                  <div class="timeline-content">
-                    <div class="timeline-date">January 15, 2024 - 2:35 PM</div>
-                    <h4>Incident Escalation</h4>
-                    <p>Situation escalated leading to use of force by officers.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-content" id="similar-tab">
-              <div class="section-header">
-                <h3>Similar Cases</h3>
-                <button class="btn primary" id="find-similar-btn">
-                  <i class="fas fa-search"></i>
-                  Find Similar Cases
-                </button>
-              </div>
-              <div class="similar-cases" id="similar-cases">
-                <!-- Similar cases will be populated by JavaScript -->
-              </div>
-            </div>
-
-            <div class="tab-content" id="foia-tab">
-              <div class="section-header">
-                <h3>FOIA Requests</h3>
-                <button class="btn primary" id="create-foia-tab-btn">
-                  <i class="fas fa-file-contract"></i>
-                  Create FOIA Request
-                </button>
-              </div>
-              <div class="foia-requests" id="foia-requests">
-                <!-- Sample FOIA Request -->
-                <div class="foia-request">
-                  <div class="request-header">
-                    <h4>Body Camera Footage Request</h4>
-                    <span class="status-badge pending">Pending</span>
-                  </div>
-                  <div class="request-description">
-                    Request for all body camera footage from officers involved in the January 15, 2024 incident.
-                  </div>
-                  <div class="request-meta">
-                    <div class="meta-item">
-                      <i class="fas fa-calendar"></i>
-                      <span>Submitted: Jan 20, 2024</span>
-                    </div>
-                    <div class="meta-item">
-                      <i class="fas fa-clock"></i>
-                      <span>Due: Feb 19, 2024</span>
-                    </div>
-                  </div>
-                  <div class="request-actions">
-                    <button class="btn small">
-                      <i class="fas fa-eye"></i>
-                      View
-                    </button>
-                    <button class="btn small primary">
-                      <i class="fas fa-magic"></i>
-                      Optimize
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script src="modern-ui.js"></script>
+  <footer>
+    <p>&copy; 2025 CaseBuddy – All rights reserved.</p>
+  </footer>
 </body>
 </html>
