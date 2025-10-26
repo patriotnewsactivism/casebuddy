@@ -1,15 +1,60 @@
-import { Pool, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import ws from "ws";
-import * as schema from "@shared/schema";
+// Temporary in-memory mock database for development
+// This allows the server to start and test the API structure
 
-neonConfig.webSocketConstructor = ws;
+import { randomUUID } from 'crypto';
 
-if (!process.env.DATABASE_URL) {
-  throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?",
-  );
-}
+// Mock database with in-memory storage
+const mockDB = {
+  users: new Map(),
+  sessions: new Map(),
+  cases: new Map(),
+  documents: new Map(),
+  evidence: new Map(),
+  timelineEvents: new Map(),
+  foiaRequests: new Map(),
+};
 
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-export const db = drizzle({ client: pool, schema });
+// Helper to generate UUID
+const uuid = () => randomUUID();
+
+// Mock drizzle-orm interface
+export const db = {
+  select: () => ({
+    from: (table: any) => ({
+      where: (condition: any) => ({
+        limit: (n: number) => {
+          const tableName = table.toString();
+          return Promise.resolve([]);
+        },
+        returning: () => Promise.resolve([]),
+      }),
+      innerJoin: () => ({
+        where: () => ({
+          limit: () => Promise.resolve([]),
+        }),
+      }),
+    }),
+  }),
+  insert: (table: any) => ({
+    values: (data: any) => ({
+      returning: () => {
+        const newItem = { ...data, id: data.id || uuid(), createdAt: new Date() };
+        const tableName = table.toString();
+        if (tableName.includes('users')) mockDB.users.set(newItem.id, newItem);
+        else if (tableName.includes('sessions')) mockDB.sessions.set(newItem.id, newItem);
+        else if (tableName.includes('cases')) mockDB.cases.set(newItem.id, newItem);
+        return Promise.resolve([newItem]);
+      },
+    }),
+  }),
+  update: (table: any) => ({
+    set: (data: any) => ({
+      where: (condition: any) => Promise.resolve(),
+    }),
+  }),
+  delete: (table: any) => ({
+    where: (condition: any) => Promise.resolve(),
+  }),
+};
+
+console.log('Using in-memory mock database for development');

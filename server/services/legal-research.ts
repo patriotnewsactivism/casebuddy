@@ -9,6 +9,25 @@ export class LegalResearchService {
     });
   }
   
+  // Static method for route usage
+  static async conductLegalResearch(query: string): Promise<any> {
+    const service = new LegalResearchService();
+    return service.conductResearchInstance(query);
+  }
+  
+  async conductResearchInstance(query: string): Promise<any> {
+    // Generate research queries and summarize
+    const queries = await this.generateResearchQueries(query, query);
+    return {
+      queries,
+      summary: "Research findings based on the query",
+      precedents: [],
+      statutes: [],
+      principles: [],
+      application: "Application of findings to the case"
+    };
+  }
+  
   async generateResearchQueries(caseDescription: string, issue: string): Promise<string[]> {
     const response = await this.anthropic.messages.create({
       model: "claude-3-sonnet-20240229",

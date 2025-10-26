@@ -9,9 +9,22 @@ export class EvidenceClassificationService {
     });
   }
   
-  async classifyEvidence(evidenceId: string, name: string, description: string, fileType: string): Promise<EvidenceClassification> {
+  // Static method for route usage
+  static async classifyEvidence(content: string): Promise<EvidenceClassification> {
+    const service = new EvidenceClassificationService();
+    return service.classifyEvidenceInstance(content);
+  }
+  
+  async classifyEvidenceInstance(content: string): Promise<EvidenceClassification> {
     // Generate classification using Claude
-    const classification = await this.generateClassification(name, description, fileType);
+    const classification = await this.generateClassification(content);
+    
+    return classification;
+  }
+  
+  async classifyEvidenceWithId(evidenceId: string, name: string, description: string, fileType: string): Promise<EvidenceClassification> {
+    // Generate classification using Claude
+    const classification = await this.generateClassification(`${name}\n${description}\n${fileType}`);
     
     // Store classification in database
     await this.storeClassification(evidenceId, classification);
@@ -19,7 +32,7 @@ export class EvidenceClassificationService {
     return classification;
   }
   
-  private async generateClassification(name: string, description: string, fileType: string): Promise<EvidenceClassification> {
+  private async generateClassification(contentString: string): Promise<EvidenceClassification> {
     const response = await this.anthropic.messages.create({
       model: "claude-3-haiku-20240307",
       max_tokens: 1000,
@@ -28,9 +41,7 @@ export class EvidenceClassificationService {
           role: "user",
           content: `Classify the following evidence item for a legal case:
           
-          Name: ${name}
-          Description: ${description}
-          File Type: ${fileType}
+          ${contentString}
           
           Please provide:
           1. Evidence type (document, photo, video, audio, physical item, testimony, etc.)

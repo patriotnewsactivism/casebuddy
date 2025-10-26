@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { FOIAOptimizationService } from '../services/foia-optimization';
+import { FoiaOptimizationService } from '../services/foia-optimization';
 
 const router = Router();
 
@@ -14,7 +14,7 @@ router.post('/foia/optimize', async (req, res) => {
     }
     
     // Optimize FOIA request
-    const optimization = await FOIAOptimizationService.optimizeFOIARequest(requestData);
+    const optimization = await FoiaOptimizationService.optimizeFOIARequest(requestData);
     
     res.json({ optimization });
   } catch (error) {
@@ -46,7 +46,7 @@ router.get('/cases/:id/foia/optimization', async (req, res) => {
     };
     
     // Optimize FOIA request
-    const optimization = await FOIAOptimizationService.optimizeFOIARequest(mockRequestData);
+    const optimization = await FoiaOptimizationService.optimizeFOIARequest(mockRequestData);
     
     res.json({ optimization });
   } catch (error) {

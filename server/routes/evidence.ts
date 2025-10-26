@@ -1,3 +1,4 @@
+import type { Express } from 'express';
 import { Router } from 'express';
 import { EvidenceClassificationService } from '../services/evidence-classification';
 
@@ -22,5 +23,9 @@ router.post('/evidence/classify', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+export function setupEvidenceRoutes(app: Express) {
+  app.use('/api', router);
+}
 
 export default router;

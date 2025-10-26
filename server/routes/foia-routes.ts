@@ -1,3 +1,4 @@
+import type { Express } from "express";
 import { Router } from "express";
 import { authenticateUser } from "../auth";
 // import { FoiaOptimizationService } from "../services/foia-optimization";
@@ -76,5 +77,9 @@ router.get("/foia/templates/:category", authenticateUser, async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+export function setupFOIARoutes(app: Express) {
+  app.use('/api', router);
+}
 
 export default router;
